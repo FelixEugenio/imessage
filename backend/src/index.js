@@ -5,6 +5,7 @@ import {clerkMiddleware} from '@clerk/express';
 import fs from 'fs';
 import cors from 'cors';
 import path from 'path';
+import job from './lib/cron.js';
 
 import connectDB from './lib/db.js';
 
@@ -51,3 +52,4 @@ async function startServer() {
 }
 
 startServer();
+if(process.env.NODE_ENV === 'production')  job.start(); // Inicia o cron job para manter o servidor acordado no Render.
