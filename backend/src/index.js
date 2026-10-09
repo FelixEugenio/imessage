@@ -6,6 +6,7 @@ import fs from 'fs';
 import cors from 'cors';
 import path from 'path';
 import job from './lib/cron.js';
+import clerkWebhook from './webhooks/clerk.webhook.js';
 
 import connectDB from './lib/db.js';
 
@@ -19,6 +20,7 @@ const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 const publicDir = path.join(process.cwd(), 'public');
 
+app.use('/api/webhooks/clerk',express.raw({type: 'application/json'}),clerkWebhook); // Necessário para webhooks do Clerk
 app.use(express.json());
 app.use(cors({origin: FRONTEND_URL, credentials: true}));
 app.use(clerkMiddleware());
