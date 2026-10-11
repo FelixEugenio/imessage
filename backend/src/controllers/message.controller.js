@@ -1,6 +1,6 @@
 // Modelos do Mongoose (representam as coleções "users" e "messages" no MongoDB)
-import User from '../models/user.model'
-import Message from '../models/message'
+import User from '../models/user.model.js'
+import Message from '../models/message.js'
 
 /**
  * Lista todos os utilizadores, exceto o que está autenticado.

@@ -9,6 +9,7 @@ import job from './lib/cron.js';
 import clerkWebhook from './webhooks/clerk.webhook.js';
 import authRoutes from './routes/auth.routes.js';
 import messageRoutes from './routes/message.routes.js';
+import {app,server} from './lib/socket.js';
 
 import connectDB from './lib/db.js';
 import { protectRoute } from './middleware/auth.middleware.js';
@@ -16,7 +17,7 @@ import { protectRoute } from './middleware/auth.middleware.js';
 // Força DNS público (corrige o erro querySrv EBADRESP em hotspots/redes que bloqueiam SRV)
 dns.setServers(['8.8.8.8', '1.1.1.1']);
 
-const app = express();
+//const app = express();
 
 const PORT = process.env.PORT || 3000;
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
@@ -50,7 +51,7 @@ async function startServer() {
   try {
     await connectDB();
 
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
   } catch (error) {
