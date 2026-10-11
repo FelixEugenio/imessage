@@ -8,8 +8,10 @@ import path from 'path';
 import job from './lib/cron.js';
 import clerkWebhook from './webhooks/clerk.webhook.js';
 import authRoutes from './routes/auth.routes.js';
+import messageRoutes from './routes/message.routes.js';
 
 import connectDB from './lib/db.js';
+import { protectRoute } from './middleware/auth.middleware.js';
 
 // Força DNS público (corrige o erro querySrv EBADRESP em hotspots/redes que bloqueiam SRV)
 dns.setServers(['8.8.8.8', '1.1.1.1']);
@@ -30,7 +32,8 @@ app.get('/health', (req, res) => {
   res.status(200).json({status: 'ok'});
 });
 
-app.use('/api', authRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/messages', messageRoutes);
 
 if (fs.existsSync(publicDir)) {
   app.use(express.static(publicDir));
